@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,14 +18,22 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [bio, setBio] = useState('');
   const [loading, setLoading] = useState(false);
+  const [redirectToHome, setRedirectToHome] = useState(false);
+  const [redirectToVerification, setRedirectToVerification] = useState(false);
   
   const { register, user } = useAuth();
-  const navigate = useNavigate();
 
   // Если пользователь уже вошел в систему, перенаправляем его на главную страницу
   if (user) {
-    navigate('/');
-    return null;
+    return <Navigate to="/" />;
+  }
+  
+  if (redirectToHome) {
+    return <Navigate to="/" />;
+  }
+  
+  if (redirectToVerification) {
+    return <Navigate to="/verification-pending" />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,6 +53,7 @@ const Register = () => {
       
       if (!isFirstUser && !bio) {
         toast.error('Пожалуйста, заполните анкету');
+        setLoading(false);
         return;
       }
       
@@ -58,10 +67,10 @@ const Register = () => {
       if (success) {
         if (isFirstUser) {
           toast.success('Регистрация успешна! Вы - первый пользователь с полным доступом к системе.');
-          navigate('/');
+          setRedirectToHome(true);
         } else {
           toast.success('Регистрация успешна! Пожалуйста, подтвердите ваш email и ожидайте одобрения администратором.');
-          navigate('/verification-pending');
+          setRedirectToVerification(true);
         }
       }
     } finally {

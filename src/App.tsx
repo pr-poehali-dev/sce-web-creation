@@ -11,6 +11,11 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import VerificationPending from "./pages/VerificationPending";
+import Admin from "./pages/Admin";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import AccessDenied from "./pages/AccessDenied";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +30,11 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/verification-pending" element={<VerificationPending />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/access-denied" element={<AccessDenied />} />
             
             {/* Здесь будут добавлены другие маршруты по мере создания страниц */}
             {/* Например:
@@ -35,11 +45,7 @@ const App = () => (
             <Route path="/news/:id" element={<NewsDetails />} />
             <Route path="/news/create" element={<CreateNews />} />
             <Route path="/about" element={<About />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/privacy" element={<Privacy />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/verification-pending" element={<VerificationPending />} />
             */}
             
             <Route path="*" element={<NotFound />} />
